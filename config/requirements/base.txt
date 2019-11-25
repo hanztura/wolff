@@ -1,0 +1,5 @@
+Django
+django-environ
+django-extensions
+rules
+django-simple-history
