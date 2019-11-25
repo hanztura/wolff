@@ -1,0 +1,50 @@
+
+      <aside class="menu">
+        <p class="menu-label">General</p>
+        <ul class="menu-list">
+          <li><a href="{% url 'system:dashboard' %}" class="{{dashboard_active}}">Dashboard</a></li>
+          <li><a class="{{pioneering_active}}" href="{% url 'pioneering:index' %}">Pioneering</a></li>
+        </ul>
+
+        <p class="menu-label">Publishers</p>
+        <ul class="menu-list">
+          <li><a href="{% url 'publishers:index' %}" class="{{publishers_active}}">Publishers</a></li>
+          <li><a href="{% url 'publishers:group-index' %}" class="{{publishers_groups_active}}">Groups</a></li>
+        </ul>
+
+        <p class="menu-label">Servants</p>
+        <ul class="menu-list">
+          <li><a href="{% url 'servants:index' %}" class="{{servants_active}}">Servant List</a></li>
+        </ul>
+
+        <p class="menu-label">Reports</p>
+        <ul class="menu-list">
+          <li><a href="{% url 'reports:mfs-index' %}" class="{{mfs_active}}">Monthly Field Service</a></li>
+
+          <li>
+            <a class="{{reports_publishers_active}} menu-label">Publishers</a>
+            <ul>
+              <li><a href="{% url 'reports:publishers' 'elderly' %}">Elderly Publishers</a></li>
+              <li><a href="{% url 'reports:publishers_inactive' %}">Inactive Publishers</a></li>
+              <li><a href="{% url 'reports:publishers' 'infirmed' %}">Infirmed Publishers</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a class="{{reports_pioneering_active}} menu-label">Pioneering</a>
+            <ul>
+              <li><a href="{% url 'reports:pioneering' 'au' %}">Auxillary Pioneers</a></li>
+              <li><a href="{% url 'reports:pioneering' 'rp' %}">Regular Pioneers</a></li>
+              <li><a href="{% url 'reports:pioneering' 'sp' %}">Special Pioneers</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a class="{{reports_servants_active}} menu-label">Servants</a>
+            <ul>
+              <li><a href="{% url 'reports:servants' 'elders' %}">Elders</a></li>
+              <li><a href="{% url 'reports:servants' 'ms' %}">Ministerial Servants</a></li>
+            </ul>
+          </li>
+        </ul>
+      </aside>

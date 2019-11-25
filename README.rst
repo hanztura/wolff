@@ -21,4 +21,6 @@ It is designed with the following assumptions:
 Installation for developers
 ===========================
 
-    *
+    * Install requirements
+    * ``python manage.py migrate``
+    * ``python manage.py createsuperuser``
