@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'simple_history',
 
     'system',
-
+    'contacts',
+    'accounting'
 ]
 
 MIDDLEWARE = [
