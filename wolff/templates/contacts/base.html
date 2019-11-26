@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+  <title>Contacts | Wolff</title>  
+{% endblock title %}
+
+{% block breadcrumbs %}
+  <li><a href='{% url 'contacts:index' %}'>Contacts</a></li>
+  {% block subbreadcrumbs %}{% endblock subbreadcrumbs %}
+{% endblock breadcrumbs %}
+
+{% block navbaritems %}
+  {% include "_snippets/navbar_items.html" %}
+{% endblock navbaritems %}
+
+{% block aside_menu %}
+  {% include "aside.html" with contacts_active='is-active' %}  
+{% endblock aside_menu %}
+
+{% block main %}
+<div class="content">
+  {% block content %}{% endblock content %}  
+</div>
+{% endblock main %}

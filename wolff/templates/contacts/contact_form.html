@@ -1,0 +1,122 @@
+{% extends "contacts/base.html" %}
+{% load static %}
+
+{% block title %}
+  <title>New Contact | Wolff</title>  
+{% endblock title %}
+
+{% block headblock %}
+  <link href='{% static "vendors/animate.css" %}' rel="stylesheet">
+{% endblock headblock %}
+
+{% block subbreadcrumbs %}
+  {% if object %}
+    <li><a href='{% url 'contacts:detail' object.pk %}'>{{ object.name|title }}</a></li>
+    <li class="is-active"><a href='#'>Edit</a></li>
+  {% else %}
+    <li class="is-active"><a href='#'>New</a></li>
+  {% endif %}
+{% endblock subbreadcrumbs %}
+
+{% block content %}
+  {% if object %}
+    <h1>Edit Contact</h1>
+  {% else %}
+    <h1>New Contact</h1>  
+  {% endif %}
+
+  <form method="POST" id="form--contact">
+    {% csrf_token %}
+
+    <div class="field">
+      <div class="control">
+        <label class="checkbox" for="{{form.is_individual.id_for_label}}">
+          <input type="checkbox" name="is_individual" id="{{form.is_individual.id_for_label}}" ref="isIndividual" v-model="isIndividual" data-default="{{form.is_individual.value}}" {% if form.is_individual.value %}checked{% endif %}>
+          Individual
+        </label>
+      </div>
+    </div>
+
+    <transition
+      name="custom-classes-transition"
+      enter-active-class="animated fadeIn"
+      enter-active-class="animated fadeOut">
+      <div class="field" key=1 v-if="isIndividual">
+        <div class="field is-normal">
+          <label class="label">Name</label>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" name="last_name" value="{{ form.last_name.value|default:'' }}" required placeholder="last name">
+              {{form.last_name.errors}}
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" name="first_name" value="{{ form.first_name.value|default:'' }}" required placeholder="first name">
+              {{form.first_name.errors}}
+              </div>
+            </div>
+
+            {% if object %}
+              <div class="field">
+                <div class="control">
+                <input class="input" type="text" name="middle_name" value="{{ form.middle_name.value|default:'' }}" placeholder="middle name">
+                {{form.middle_name.errors}}
+                </div>
+              </div>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+
+      <div class="field" key=2 v-else>
+        <label class="label">Registered Name</label>
+        <div class="control">
+          <input class="input" type="text" name="registered_name" value="{{ form.registered_name.value|default:'' }}" required placeholder="ABC Company">
+        {{form.registered_name.errors}}
+        </div>
+      </div>
+    </transition>
+
+      {% if object %}
+        {% include "_snippets/button_save.html" %}
+      {% else %}
+        {% include "_snippets/button_create.html" %}
+      {% endif %}
+  </form>
+{% endblock content %}
+
+
+{% block endscript %}
+  <script>
+    contactFormApp = new Vue({
+      el: '#form--contact',
+      name: 'FormContact',
+      delimiters: ['[[', ']]'],
+
+      data: () => {
+        return {
+          isIndividual: true,
+        }
+      },
+
+      methods: {
+        setDefault: function () {
+          let target = this.$refs.isIndividual;
+          if (target.getAttribute('data-default') != 'True') {
+            this.isIndividual = false;
+          }
+        },
+      },
+
+      mounted() {
+        this.setDefault();
+      }
+    });
+  </script>
+{% endblock endscript %}

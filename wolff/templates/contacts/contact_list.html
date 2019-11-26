@@ -1,0 +1,32 @@
+{% extends "contacts/base.html" %}
+
+{% block content %}
+  <h1>Contacts List</h1>
+  <a href='{% url "contacts:create" %}'>{% include "_snippets/button_new.html" %}</a>
+
+  <table class="table is-fullwidth">
+    <thead>
+      <tr>
+        <th class="has-text-centered">Name</th>
+        <th class="has-text-centered">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contact in object_list %}
+        <tr>
+          <td>{{ contact.name|title }}</td>
+          <td>
+            <a href='{% url "contacts:detail" contact.pk %}'><span class="button is-outlined">{% include "_snippets/icon_view.html" %}</span></a>
+            <a href='{% url "contacts:update" contact.pk %}'><span class="button is-outlined">{% include "_snippets/icon_edit.html" %}</span></a>
+          </td>
+        </tr>
+      {% endfor %}
+
+      {% if not object_list %}
+        <tr>
+          <td colspan="3" class="has-text-centered">No members. Please <a href="{% url 'contacts:create' %}"><u>add</u></a>.</td>
+        </tr>  
+      {% endif %}
+    </tbody>
+  </table>
+{% endblock content %}

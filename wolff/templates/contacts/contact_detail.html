@@ -1,0 +1,13 @@
+{% extends "contacts/base.html" %}
+
+{% block title %}
+  <title>{{ object.name }} - Contacts | Wolff</title>  
+{% endblock title %}
+
+{% block subbreadcrumbs %}
+  <li class="is-active"><a href='#'>{{ object.name|title }}</a></li>
+{% endblock subbreadcrumbs %}
+
+{% block content %}
+  <h1>{{ object.name }}</h1>  
+{% endblock content %}
