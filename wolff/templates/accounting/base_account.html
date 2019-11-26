@@ -1,0 +1,11 @@
+{% extends "accounting/base.html" %}
+
+
+{% block subbreadcrumbs %}
+  <li><a href='{% url 'accounting:coa_index' %}'>Chart of Accounts</a></li>
+  {% block accountbreadcrumbs %}{% endblock accountbreadcrumbs %}
+{% endblock subbreadcrumbs %}
+
+{% block aside_menu %}
+  {% include "aside.html" with chart_of_accounts_active='is-active' %}  
+{% endblock aside_menu %}

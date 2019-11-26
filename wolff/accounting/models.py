@@ -2,6 +2,7 @@ from enum import Enum
 from uuid import uuid4
 
 from django.db import models
+from django.urls import reverse_lazy
 
 from django_extensions.db.models import TimeStampedModel
 
@@ -28,8 +29,14 @@ class Account(CompanyFieldMixin):
     is_contra_account = models.BooleanField(default=False, blank=True)
     is_cash_account = models.BooleanField(default=False, blank=True)
 
+    class Meta:
+        ordering = 'account_type__name', 'title'
+
     def __str_(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse_lazy('accounting:coa_detail', args=[self.pk, ])
 
 
 class Journal(CompanyFieldMixin, TimeStampedModel):

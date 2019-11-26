@@ -1,0 +1,103 @@
+{% extends "accounting/base_account.html" %}
+{% load static %}
+
+{% block title %}
+  <title>New Account - Accounting | Wolff</title>  
+{% endblock title %}
+
+{% block headblock %}
+  <link href='{% static "vendors/animate.css" %}' rel="stylesheet">
+{% endblock headblock %}
+
+{% block accountbreadcrumbs %}
+  {% if object %}
+    <li><a href='{% url 'accounting:coa_detail' object.pk %}'>{{ object.title|title }}</a></li>
+    <li class="is-active"><a href='#'>Edit</a></li>
+  {% else %}
+    <li class="is-active"><a href='#'>New</a></li>
+  {% endif %}
+{% endblock accountbreadcrumbs %}
+
+{% block content %}
+  {% if object %}
+    <h1>Edit Account</h1>
+  {% else %}
+    <h1>New Account</h1>  
+  {% endif %}
+
+  <form method="POST" id="form--account">
+    {% csrf_token %}
+
+    <div class="field">
+      <div class="control">
+        <input class="input" type="text" name="title" value="{{ form.title.value|default:'' }}" required placeholder="example: Accounts Receivable">
+      {{form.title.errors}}
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">{{form.account_type.label}}</label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          {{form.account_type}}
+        </div>
+      {{form.account_type.errors}}
+      </div>
+    </div>
+
+    {% if object %}
+      <div class="field">
+        <div class="control">
+          <label class="checkbox" for="{{form.is_cash_account.id_for_label}}">
+            <input type="checkbox" name="is_cash_account" id="{{form.is_cash_account.id_for_label}}" {% if form.is_cash_account.value %}checked{% endif %}>
+            Cash Account
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="checkbox" for="{{form.is_contra_account.id_for_label}}">
+            <input type="checkbox" name="is_contra_account" id="{{form.is_contra_account.id_for_label}}" {% if form.is_contra_account.value %}checked{% endif %}>
+            Contra-account
+          </label>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if object %}
+      {% include "_snippets/button_save.html" %}
+    {% else %}
+      {% include "_snippets/button_create.html" %}
+    {% endif %}
+  </form>
+{% endblock content %}
+
+
+{% block endscript %}
+  <script>
+    contactFormApp = new Vue({
+      el: '#form--account',
+      name: 'AccountForm',
+      delimiters: ['[[', ']]'],
+
+      data: () => {
+        return {
+          isIndividual: true,
+        }
+      },
+
+      methods: {
+        setDefault: function () {
+          let target = this.$refs.isIndividual;
+          if (target.getAttribute('data-default') != 'True') {
+            this.isIndividual = false;
+          }
+        },
+      },
+
+      mounted() {
+      }
+    });
+  </script>
+{% endblock endscript %}

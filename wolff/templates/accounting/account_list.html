@@ -1,0 +1,42 @@
+{% extends "accounting/base.html" %}
+
+{% block title %}
+  <title>Chart of Accounts - Accounting | Wolff</title>  
+{% endblock title %}
+
+{% block subbreadcrumbs %}
+  <li class="is-active"><a href='#'>Chart of Accounts</a></li>
+{% endblock subbreadcrumbs %}
+
+{% block content %}
+  <h1>Chart of Accounts</h1>
+  <a href='{% url "accounting:coa_create" %}'>{% include "_snippets/button_new.html" %}</a>
+
+  <table class="table is-fullwidth">
+    <thead>
+      <tr>
+        <th class="has-text-centered">Account</th>
+        <th class="has-text-centered">Type</th>
+        <th class="has-text-centered">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for account in object_list %}
+        <tr>
+          <td>{{ account.title|title }}</td>
+          <td>{{ account.account_type }}</td>
+          <td>
+            <a href='{% url "accounting:coa_detail" account.pk %}'><span class="button is-outlined">{% include "_snippets/icon_view.html" %}</span></a>
+            <a href='{% url "accounting:coa_update" account.pk %}'><span class="button is-outlined">{% include "_snippets/icon_edit.html" %}</span></a>
+          </td>
+        </tr>
+      {% endfor %}
+
+      {% if not object_list %}
+        <tr>
+          <td colspan="3" class="has-text-centered">No data. Please <a href="{% url 'accounting:coa_create' %}"><u>add</u></a>.</td>
+        </tr>  
+      {% endif %}
+    </tbody>
+  </table>
+{% endblock content %}

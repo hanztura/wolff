@@ -1,5 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib import messages
 from django.db import models
 
 from .models import Company
@@ -34,3 +35,24 @@ class AddRequestToForm:
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+
+
+class SaveCompanyFormMixin:
+
+    def save(self, *args, **kwargs):
+        kwargs['commit'] = False
+        obj = super().save(*args, **kwargs)
+        if self.request:
+            obj.sys_company = self.request.user.currently_loggedin_company
+        obj.save()
+
+        return obj
+
+
+class SuccessFormOperationMixin:
+    def form_valid(self, form):
+        msg = 'Successfully saved.'
+        messages.success(
+            self.request,
+            msg)
+        return super().form_valid(form)
