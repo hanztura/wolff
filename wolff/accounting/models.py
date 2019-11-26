@@ -5,7 +5,8 @@ from django.db import models
 
 from django_extensions.db.models import TimeStampedModel
 
-from system.utils import CompanyFieldMixin, NameAsStrMixin
+from system.utils import (
+    CompanyFieldMixin, NameAsStrMixin, GenericForeignKeyMixin)
 
 
 class NormalBalance(Enum):
@@ -41,12 +42,10 @@ class Journal(CompanyFieldMixin, TimeStampedModel, models.Model):
         return self.code
 
 
-class JournalItem(TimeStampedModel, models.Model):
+class JournalItem(TimeStampedModel, GenericForeignKeyMixin):
     journal = models.ForeignKey(
         Journal, on_delete=models.PROTECT, related_name='items')
     account = models.ForeignKey(
         Account, on_delete=models.PROTECT, related_name='journals')
     debit = models.DecimalField(max_digits=14, decimal_places=2)
     credit = models.DecimalField(max_digits=14, decimal_places=2)
-    source_type = models.CharField(max_length=20)
-    source_reference = models.CharField(max_length=200)
