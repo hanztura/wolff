@@ -1,9 +1,10 @@
 from django.forms import ModelForm
 
 from .models import Contact
+from system.utils import SaveCompanyFormMixin
 
 
-class ContactModelForm(ModelForm):
+class ContactModelForm(SaveCompanyFormMixin, ModelForm):
 
     class Meta:
         model = Contact
@@ -19,12 +20,3 @@ class ContactModelForm(ModelForm):
         self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
         self.fields['is_individual'].initial = True
-
-    def save(self, *args, **kwargs):
-        kwargs['commit'] = False
-        obj = super().save(*args, **kwargs)
-        if self.request:
-            obj.sys_company = self.request.user.currently_loggedin_company
-        obj.save()
-
-        return obj
