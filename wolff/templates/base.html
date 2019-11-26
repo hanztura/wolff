@@ -45,7 +45,7 @@
             <div class="navbar-item">
               <div class="buttons">
                 {% if request.user.is_authenticated %}
-                  <a class="button is-primary" href="#">
+                  <a class="button is-primary" href="/admin/">
                     <strong>Hi {{user.username|title}}!</strong>
                   </a>
                   
@@ -103,6 +103,7 @@
     {% if user.is_authenticated %}
       <div class="column is-one-fifth">
         {% block aside_menu %}
+          {% include "aside.html" %}
         {% endblock aside_menu %}
       </div>
     {% endif %}
