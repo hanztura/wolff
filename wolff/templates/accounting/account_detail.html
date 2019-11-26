@@ -1,0 +1,16 @@
+{% extends "accounting/base_account.html" %}
+
+{% block title %}
+  <title>{{ object.title }} - Chart of Accounts | Wolff</title>  
+{% endblock title %}
+
+{% block accountbreadcrumbs %}
+  <li class="is-active"><a href='#'>{{ object.title|title }}</a></li>
+{% endblock accountbreadcrumbs %}
+
+{% block content %}
+  <h1>{{ object.title|title }}</h1>
+  <p>Type: {{ object.account_type }}</p> 
+  <p>Cash account: {% if object.is_cash_account %}{% include "_snippets/icon_check.html" %}{% else %}{% include "_snippets/icon_times.html" with color='has-text-dark' %}{% endif %}</p> 
+  <p>Contra-account: {% if object.is_contra_account %}{% include "_snippets/icon_check.html" %}{% else %}{% include "_snippets/icon_times.html" with color='has-text-dark' %}{% endif %}</p> 
+{% endblock content %}

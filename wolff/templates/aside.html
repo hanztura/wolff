@@ -5,4 +5,10 @@
     <li><a href="#" class="{{dashboard_active}}">Dashboard</a></li>
     <li><a class="{{contacts_active}}" href="{% url 'contacts:index' %}">Contacts</a></li>
   </ul>
+
+  <p class="menu-label">Accounting</p>
+  <ul class="menu-list">
+    <li class="{{chart_of_accounts_active}}"><a href="{% url 'accounting:coa_index' %}">Chart of Accounts</a></li>
+    <li><a href="#">Journals</a></li>
+  </ul>
 </aside>
