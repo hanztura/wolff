@@ -21,7 +21,7 @@ class AccountType(NameAsStrMixin, models.Model):
         max_length=5, choices=[(c.name, c.value) for c in NormalBalance])
 
 
-class Account(CompanyFieldMixin, models.Model):
+class Account(CompanyFieldMixin):
     title = models.CharField(max_length=50)
     account_type = models.ForeignKey(
         AccountType, on_delete=models.PROTECT, related_name='accounts')
@@ -32,7 +32,7 @@ class Account(CompanyFieldMixin, models.Model):
         return self.title
 
 
-class Journal(CompanyFieldMixin, TimeStampedModel, models.Model):
+class Journal(CompanyFieldMixin, TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     series = models.SmallIntegerField(blank=True)
     code = models.CharField(max_length=50, blank=True)
